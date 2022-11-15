@@ -3,13 +3,13 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="org.zerock.mapper.practice.CustomerCommentMapper">
+<mapper namespace="com.study.mapper.practice.CustomerCommentMapper">
 <insert id="enrollComment">
 INSERT INTO Comment(customerInfoId, content)
 VALUES(#{customerInfoId}, #{content})
 </insert>
 
-<select id="showComment" resultType="org.zerock.domain.practice.CommentDto">
+<select id="showComment" resultType="com.study.domain.practice.CommentDto">
 SELECT
 	id, 
 	content,

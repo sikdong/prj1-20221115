@@ -33,6 +33,20 @@
 						<div id="userIdText1" class="form-text">*아이디 중복확인이 필요합니다</div>
 						
 					</div>
+					
+					<div class="mb-3">
+						<label for="" class="form-label">
+							닉네임
+						</label>
+						
+						<div class="input-group">
+							<input id="nickNameInput" class="form-control" type="text" name="nickName">
+							<button id="nickNameConfirmButton" class="btn btn-outline-secondary" type="button">중복확인</button>
+						</div>
+						
+						<div id="nickNameConfirmMesssage" class="form-text">*닉네임 중복확인이 필요합니다</div>
+						
+					</div>
 
 					<div class="mb-3">
 						<label for="" class="form-label">
@@ -46,7 +60,7 @@
 						<label for="" class="form-label">
 							암호 확인
 						</label>
-						<input id="passwordInput2" class="form-control" type="text" name="password">
+						<input id="passwordInput2" class="form-control" type="text" >
 					</div>
 
 					<div class="mb-3">
@@ -62,7 +76,7 @@
 						<div id="emailConfirmMessage" class="form-text">*이메일 중복확인이 필요합니다</div>
 					</div>
 
-					<input disabled class="btn btn-primary" type="submit" value="가입">
+					<input id="submitButton" disabled class="btn btn-primary" type="submit" value="가입">
 					<!-- disabled : 비활성화 -->
 				
 				</form>
@@ -73,14 +87,39 @@
 <script>
 const ctx = "${pageContext.request.contextPath}"
 
-//아이디 사용 가능 여부 확인
+let availableNickname = false;
 let availableId = false;
 let availableEmail = false;
 let availablePassword = false;
 
 function enableSubmitButton(){
-	
+	const submitButton = document.querySelector("#submitButton")
+	if(availableNickname && availableId && availableEmail && availablePassword){
+		submitButton.removeAttribute("disabled")
+	} else {
+		submitButton.setAttribute("disabled", "disabled")
+	}
 } 
+
+document.querySelector("#nickNameConfirmButton").addEventListener("click", function(){
+	const nickName = document.querySelector("#nickNameInput").value;
+	
+	fetch(ctx+"/member/existNickName", {
+		method : "post",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify({nickName})
+	})
+	.then(res => res.json())
+	.then(data => {
+		document.querySelector("#nickNameConfirmMesssage").innerText = data.message
+		if(data.status == "not exist"){
+			availableNickname =true;
+			enableSubmitButton();
+		}
+	})
+})
 
 document.querySelector("#userIdExistButton1").addEventListener("click", function(){
 	//입력된 userId를
@@ -92,6 +131,10 @@ document.querySelector("#userIdExistButton1").addEventListener("click", function
 	.then(data => {
 	//응답 받아서 메세지 출력
 		document.querySelector("#userIdText1").innerText = data.message
+		if(data.message == "회원가입 가능한 아이디 입니다"){
+			availableId =true;
+			enableSubmitButton();
+		}
 	})
 	
 	
@@ -110,6 +153,10 @@ document.querySelector("#presentEmailConfirmButton").addEventListener("click", f
 	.then(res => res.json())
 	.then(data => {
 		document.querySelector("#emailConfirmMessage").innerText = data.message;
+		if(data.status == "not exist"){
+			availableEmail =true;
+			enableSubmitButton();
+		}
 	})
 })
 /* 패스워드 일치하는지 확인  */
@@ -123,9 +170,11 @@ function matchPassword(){
 	
 	if(value1 == value2){
 		passwordText1.innerText = "패스워드가 일치합니다"
+			availablePassword = true;
 	} else {
 		passwordText1.innerText = "패스워드가 일치하지 않습니다. 다시 입력해주세요"
 	}
+			enableSubmitButton();
 }
 passwordInput1.addEventListener("keyup", matchPassword);
 passwordInput2.addEventListener("keyup", matchPassword);

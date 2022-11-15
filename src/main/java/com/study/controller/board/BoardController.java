@@ -35,7 +35,7 @@ public class BoardController {
 			MultipartFile[] files,
 			RedirectAttributes rttr){
 		                // 디스패쳐 서블릿이 알아서 넣어주기때문에 인수로만 받으면 됨
-		//request param 수집/ 가공
+		//request param 수집/ 가공 //
 		
 		//business 로직 
 		int cnt = service.register(board, files);

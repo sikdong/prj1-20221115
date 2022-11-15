@@ -28,7 +28,7 @@ public class CustomerCommentController {
 	@PostMapping("enroll")
 	@ResponseBody
 	public Map<String, Object> method1(@RequestBody CommentDto comment){
-	// json형식으로 넘어갔으니까 받을 객체가 있어야 함	
+	// json 형식으로 넘어갔으니까 받을 객체가 있어야 함	
 	Map<String, Object> map = new HashMap<String, Object>();
 	int cnt = service.enrollComment(comment);
 	

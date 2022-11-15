@@ -24,6 +24,22 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
+	@PostMapping("existNickName")
+	@ResponseBody
+	public Map<String, Object> getByNickname(@RequestBody Map<String, String> res){
+		Map<String, Object> map = new HashMap<>();
+		MemberDto member = service.getByNickname(res.get("nickName"));
+		if(member == null) {
+			map.put("status", "not exist");
+			map.put("message", "사용 가능한 닉네임 입니다");
+		} else {
+			map.put("status", "exist");
+			map.put("message", "이미 존재하는 닉네임 입니다");
+		}
+		
+		return map;
+	}
+	
 	@PostMapping("existEmail")
 	@ResponseBody
 	public Map<String, Object> existEmail(@RequestBody Map<String, String> req ) {

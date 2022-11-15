@@ -35,6 +35,19 @@
 						</label>
 						<input class="form-control-plaintext" type="text" value="${memberList.id }" readonly>
 					</div>
+					
+					<div class="mb-3">
+						<label for="" class="form-label">
+							닉네임
+						</label>
+						
+						<div class="input-group">
+							<input data-old-nickname="${memberList.nickName}" value="${memberList.nickName }" id="nickNameInput" class="form-control" type="text" name="nickName">
+							<button id="nickNameConfirmButton" class="btn btn-outline-secondary" type="button">중복확인</button>
+						</div>
+						<div id="nickNameConfirmMessage" class="form-text"></div>	
+					</div>
+					
 					<div class="mb-3">
 						<label for="" class="form-label">
 							암호 
@@ -186,7 +199,7 @@ document.querySelector("#modalConfirmButton").addEventListener("click", function
 	const formOldPasswordInput = document.querySelector(`#form1 input[name="oldPassword"]`)
 	// 모달 암호 input 입력된 값을 
 	// form 안의 기존암호 input에 옮기고
-	formOldPasswordInput.value = modalInput.value;
+	formOldPasswordInput.value = modalInput.value;	
 	
 	// form을 submit
 	form.submit();	
@@ -208,6 +221,28 @@ function matchPassword() {
 		document.querySelector("#confirmInput").setAttribute("disabled", "disabled")
 	}
 }
+
+document.querySelector("#nickNameConfirmButton").addEventListener("click" , function(){
+	const nickName = document.querySelector("#nickNameInput").value;
+	fetch(ctx+"/member/existNickName" , {
+		method : "post",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify({nickName})
+	})
+	.then(res => res.json())
+	.then(data => {
+		document.querySelector("#nickNameConfirmMessage").innerText = data.message
+		if(data.status == "not exist"){
+			document.querySelector("#confirmInput").removeAttribute("disabled")
+		} else {
+			document.querySelector("#confirmInput").setAttribute("disabled", "")
+		}
+	})
+})
+
+d
 
 
 </script>

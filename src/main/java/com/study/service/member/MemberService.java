@@ -45,6 +45,11 @@ public class MemberService {
 		// TODO Auto-generated method stub
 		return mapper.selectByEmail(email);
 	}
+
+	public MemberDto getByNickname(String nickName) {
+		// TODO Auto-generated method stub
+		return mapper.selectByNickname(nickName);
+	}
 	
 	
 }
