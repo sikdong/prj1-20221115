@@ -11,8 +11,42 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<h1>welcome index file!</h1>
+<button id="btn1">맵 fetch 연습</button><br>
+<button id="btn2">자바빈에 담겨져 있는 fetch 연습</button><br>
+<button id="btn3">input value로 보내서 값 출력하는 fetch 연습</button><br>
+<input type="text" id="idInput" value="3"/>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+<script>
+const ctx = "${pageContext.request.contextPath}";
+
+document.querySelector("#btn1").addEventListener("click", function(){
+	
+	fetch(ctx+"/practic/sub01")
+	.then(res => res.json())
+	.then(data => {
+		console.log(data);
+	})
+})
+
+document.querySelector("#btn2").addEventListener("click", function(){
+	
+	fetch(ctx+"/practice/sub04")
+	.then(res => res.json())
+	.then(data => console.log(data.id))
+})
+
+document.querySelector("#btn3").addEventListener("click", function() {
+	const id = document.querySelector("#idInput").value;
+	fetch(ctx+"/practice/sub07/"+id)
+	.then(res => res.json())
+	.then(data => console.log(data.city))
+})
+ 
+
+
+
+</script>
 </body>
 </html>

@@ -11,7 +11,30 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<h1>welcome index file!</h1>
+	<div class="container">
+	<h3>고객 정보 수정</h3>
+	<hr>
+		<div class="row">
+			<div class="col">
+				<form action="" method="post">
+					이름 : <input type="text" name="name" value="${customerList.name }">
+					<br>
+					별칭 : <input type="text" name="contactName" value="${customerList.contactName }">
+					<br>
+					주소 : <input type="text" name="address" value="${customerList.address }">
+					<br>
+					도시 : <input type="text" name="city" value="${customerList.city }"> 
+					<br>
+					우편 번호 : <input type="text" name="postalCode" value="${customerList.postalCode }">
+					<br>
+					나라 : <input type="text" name="country" value="${customerList.country }">
+					<br>
+					<input type="submit" value="수정">
+				</form>
+			</div>
+		</div>
+	</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
 </body>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.zerock.mapper.practice.CustomerCommentMapper">
+<insert id="enrollComment">
+INSERT INTO Comment(customerInfoId, content)
+VALUES(#{customerInfoId}, #{content})
+</insert>
+
+<select id="showComment" resultType="org.zerock.domain.practice.CommentDto">
+SELECT
+	id, 
+	content,
+	inserted
+FROM Comment
+WHERE customerInfoId = #{customerInfoId}
+ORDER BY id DESC;	
+
+</select>
+
+<delete id="removeComment">
+DELETE FROM Comment
+WHERE id = #{id}
+</delete>
+ 
+
+</mapper>
+

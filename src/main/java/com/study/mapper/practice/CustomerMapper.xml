@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="org.zerock.mapper.practice.CustomerMapper">
+	<!-- 버튼 마지막 페이지로 이동하기 위한 전체 항목 개수 구하기 -->
+<select id="countAll" resultType="int">
+SELECT Count(*)
+FROM Customers
+WHERE
+	<trim prefixOverrides="OR">
+	<if test ="column =='all' or column=='city'">
+	OR City LIKE #{keyword}
+	</if>
+	<if test="column=='all' or column='country'">
+	OR Country LIKE #{keyword}
+	</if>
+	</trim>
+</select>
+
+	<!-- list.jsp에서 고객 정보 보여지는 화면 get-->
+	<select id="show" resultType="org.zerock.domain.practice.CustomerDto">
+		SELECT 
+			CustomerId id,
+			CustomerName name,
+			Address,
+			City,
+			Country
+		FROM Customers
+		WHERE
+		<trim prefixOverrides="OR">
+		<if test ="column =='all' or column=='city'">
+		OR City LIKE #{keyword}
+		</if>
+		<if test="column=='all' or column='country'">
+		OR Country LIKE #{keyword}
+		</if>
+		</trim>
+		LIMIT #{start}, #{end};
+	</select>
+	
+	<!-- 고객 정보 신규 등록 post -->
+	<insert id="register" useGeneratedKeys="true" keyProperty="id">
+	INSERT INTO 
+	Customers(CustomerName, Address, City, Country)
+	VALUES
+	(#{name}, #{address}, #{city}, #{country})
+	</insert>
+	
+	<!-- 해당 고객id 선택 get-->
+	<select id="showCustomer" resultType="org.zerock.domain.practice.CustomerDto">
+		SELECT 
+			CustomerId id,
+			CustomerName name,
+			ContactName,
+			Address,
+			City,
+			PostalCode,
+			Country
+		FROM Customers
+		WHERE CustomerId = #{id}
+	</select>
+	
+	<!-- 해당 고객 삭제 delete-->
+	<delete id="deleteCustomer">
+		DELETE FROM Customers
+		WHERE CustomerId= #{id}
+	</delete>
+	
+	<!-- 해당 고객 정보 갱신 put  -->
+	<update id="updateCustomer">
+		UPDATE Customers
+		SET 
+			CustomerName = #{name},
+			Address = #{address},
+			City = #{city},
+			PostalCode = #{postalCode},
+			Country = #{country}
+		WHERE 
+			CustomerId = #{id}
+	</update>
+</mapper>

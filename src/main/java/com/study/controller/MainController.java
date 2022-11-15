@@ -5,16 +5,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class HomeController {
-
-	@RequestMapping("")
+public class MainController {
+	
+	@RequestMapping("/")
 	@ResponseBody
 	public String home() {
-		return "welcome Home!";
+		return "welcome home!";
 	}
 	
 	@RequestMapping("index")
 	public void index() {
-		
 	}
 }
