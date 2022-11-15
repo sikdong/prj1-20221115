@@ -18,7 +18,7 @@ import com.study.service.practice.CustomerService;
 @Controller
 @RequestMapping("practice")
 public class CustomerController {
-	
+	// 반영됨?
 	@Autowired
 	private CustomerService service;
 	
