@@ -33,13 +33,6 @@
 				</label>
 				<input class="form-control" type="text" value="${memberList.nickName }" readonly>
 			</div>
-			
-			<div class="mb-3">
-				<label for="" class="form-label">
-					암호 
-				</label>
-				<input class="form-control" type="text" value="${memberList.password }" readonly>
-			</div>
 			<div class="mb-3">
 				<label for="" class="form-label">
 					이메일 

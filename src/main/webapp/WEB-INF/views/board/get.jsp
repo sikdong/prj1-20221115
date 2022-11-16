@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.net.*" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,11 +24,15 @@
 	<my:navbar></my:navbar>
 	<c:url value="/board/modify" var="modifyLink">
 		<c:param name="id" value="${board.id }"></c:param>
-
 	</c:url>
+	
 	<h1>${board.id }번 게시물
-	<a class="btn btn-warning" href="${modifyLink }"><i
-		class="fa-solid fa-pen-to-square">수정&삭제</i></a>
+	<sec:authentication property="name" var="username"/>
+	<c:if test="${board.writer== username }">
+	<a class="btn btn-warning" href="${modifyLink }">
+		<i class="fa-solid fa-pen-to-square">수정&삭제</i>
+	</a>
+	</c:if>
 	</h1>
 	<div class="mb-3">
 		<label class="form-label"> 제목 </label> 

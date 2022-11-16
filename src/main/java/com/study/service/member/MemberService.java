@@ -3,6 +3,7 @@ package com.study.service.member;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.study.domain.member.MemberDto;
@@ -13,8 +14,14 @@ public class MemberService {
 	
 	@Autowired
 	private MemberMapper mapper;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public int insert(MemberDto member) {
+		
+		String pw = member.getPassword();
+		member.setPassword(passwordEncoder.encode(pw));
 		// TODO Auto-generated method stub
 		return mapper.insert(member);
 	}
@@ -30,10 +37,20 @@ public class MemberService {
 	}
 
 	public int modifyMemberInfo(MemberDto member) {
-		// TODO Auto-generated method stub
-		return mapper.updateMemberInfo(member);
+		int cnt = 0;
+
+		try {
+			String encodedPw = passwordEncoder.encode(member.getPassword());
+			member.setPassword(encodedPw);
+
+			return mapper.updateMemberInfo(member);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
+		return cnt; 
 	}
+		
 
 	public int remove(String id) {
 		// TODO Auto-generated method stub

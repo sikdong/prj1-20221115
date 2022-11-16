@@ -72,8 +72,10 @@ WHERE id=#{id}
 UPDATE 
 	Member
 SET 
-	nickName = #{nickName},
+	<if test="Password != null">
 	password = #{password},
+	</if>
+	nickName = #{nickName},
 	email = #{email}
 WHERE 
 	id= #{id}

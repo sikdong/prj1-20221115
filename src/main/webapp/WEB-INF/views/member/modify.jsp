@@ -47,20 +47,20 @@
 						</div>
 						<div id="nickNameConfirmMessage" class="form-text"></div>	
 					</div>
-					
+					<input type="checkbox" name="newPassword" value="true" id="newPasswordCheckbox1"> 암호 변경
 					<div class="mb-3">
 						<label for="" class="form-label">
-							암호 
+							새 암호 
 						</label>
-						<input id="passwordInput1" class="form-control" type="password" value="${memberList.password }" name="password">
+						<input disabled id="passwordInput1" class="form-control" type="password" name="password">
 						<div class="form-text" id="passwordText1"></div>
 					</div>
 					
 					<div class="mb-3">
 						<label for="" class="form-label">
-							암호 확인
+							새 암호 확인
 						</label>
-						<input id="passwordInput2" class="form-control" type="password" value="${memberList.password }">
+						<input disabled id="passwordInput2" class="form-control" type="password" value="${memberList.password }">
 					</div>
 					
 					<div class="mb-3">
@@ -242,7 +242,18 @@ document.querySelector("#nickNameConfirmButton").addEventListener("click" , func
 	})
 })
 
-d
+<%-- 새 패스워드 입력 체크박스 --%>
+document.querySelector("#newPasswordCheckbox1").addEventListener("change", function() {
+	const pwInput1 = document.querySelector("#passwordInput1");
+	const pwInput2 = document.querySelector("#passwordInput2");
+	if (this.checked) {
+		pwInput1.removeAttribute("disabled");
+		pwInput2.removeAttribute("disabled");
+	} else {
+		pwInput1.setAttribute("disabled", "");
+		pwInput2.setAttribute("disabled", "");
+	}
+});
 
 
 </script>

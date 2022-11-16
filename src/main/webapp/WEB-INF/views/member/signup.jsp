@@ -26,7 +26,7 @@
 						</label>
 						
 						<div class="input-group">
-							<input id="userIdInput1" class="form-control" type="text" name="id">
+							<input pattern="\d{3}" id="userIdInput1" class="form-control" type="text" name="id">
 							<button id="userIdExistButton1" class="btn btn-outline-secondary" type="button">중복확인</button>
 						</div>
 						

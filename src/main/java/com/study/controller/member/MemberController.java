@@ -3,7 +3,11 @@ package com.study.controller.member;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +25,16 @@ import com.study.service.member.MemberService;
 @RequestMapping("member")
 public class MemberController {
 
+	@GetMapping("login")
+	public void login() {
+		
+	}
+	
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@PostMapping("existNickName")
 	@ResponseBody
@@ -110,28 +122,42 @@ public class MemberController {
 	}
 	
 	@PostMapping("modify")
-	public String modify(MemberDto member, RedirectAttributes rttr) {
-		int cnt = service.modifyMemberInfo(member);
-		if (cnt == 1) {
-			// 가입 잘되면
-			rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다");
-			return "redirect:/member/list";
-		} else {
-			rttr.addFlashAttribute("message", "회원 가입 실패하셨습니다");
-			rttr.addFlashAttribute("member", member);
-		}
-		return "redirect:/member/list";
-	}
-	
-	@PostMapping("remove")
-	public String remove(String id, RedirectAttributes rttr) {
-		 int cnt = service.remove(id);
-		 if (cnt == 1) {
-				rttr.addFlashAttribute("message", id+" 회원님이 탈퇴 되었습니다");
-				return "redirect:/member/list";
+	public String modify(MemberDto member, String oldPassword, RedirectAttributes rttr) {
+		MemberDto oldmember = service.showMemberInfo(member.getId());
+
+		rttr.addAttribute("id", member.getId());
+		boolean passwordMatch = passwordEncoder.matches(oldPassword, oldmember.getPassword());
+		if (passwordMatch) {
+			// 기존 암호가 맞으면 회원 정보 수정
+			int cnt = service.modifyMemberInfo(member);
+
+			if (cnt == 1) {
+				rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다.");
+				return "redirect:/member/info";
 			} else {
-				rttr.addFlashAttribute("message", "회원 탈퇴 실패하셨습니다");
+				rttr.addFlashAttribute("message", "회원 정보가 수정되지 않았습니다.");
+				return "redirect:/member/modify";
 			}
-		 return "redirect:/member/list";
+		} else {
+			rttr.addFlashAttribute("message", "암호가 일치하지 않습니다.");
+			return "redirect:/member/modify";
+		}
+	}
+	@PostMapping("remove")
+	public String remove(String id, String oldPassword, RedirectAttributes rttr, HttpServletRequest request) throws ServletException {
+		MemberDto oldmember = service.showMemberInfo(id);
+		boolean passwordMatch = passwordEncoder.matches(oldPassword, oldmember.getPassword());
+
+		if (passwordMatch)  {
+			service.remove(id);
+			rttr.addFlashAttribute("message", id + "회원님이 탈퇴하였습니다.");
+			request.logout();
+			return "redirect:/board/list";
+
+		} else {
+			rttr.addAttribute("id", id);
+			rttr.addFlashAttribute("message", "암호가 일치하지 않습니다.");
+			return "redirect:/member/modify";
+		}
 	}
 }
