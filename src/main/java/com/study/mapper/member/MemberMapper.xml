@@ -72,7 +72,7 @@ WHERE id=#{id}
 UPDATE 
 	Member
 SET 
-	<if test="Password != null">
+	<if test="password != null">
 	password = #{password},
 	</if>
 	nickName = #{nickName},

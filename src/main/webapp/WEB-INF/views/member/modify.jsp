@@ -25,7 +25,7 @@
 					</div>
 				</c:if>
 				
-				<h1>회원 정보 수정</h1>
+				<h1>회원 정보</h1>
 			
 				<form id="form1" action="" method="post">
 				
@@ -60,7 +60,7 @@
 						<label for="" class="form-label">
 							새 암호 확인
 						</label>
-						<input disabled id="passwordInput2" class="form-control" type="password" value="${memberList.password }">
+						<input disabled id="passwordInput2" class="form-control" type="password" >
 					</div>
 					
 					<div class="mb-3">

@@ -127,13 +127,14 @@ public class MemberController {
 
 		rttr.addAttribute("id", member.getId());
 		boolean passwordMatch = passwordEncoder.matches(oldPassword, oldmember.getPassword());
+		System.out.println(passwordMatch);
 		if (passwordMatch) {
 			// 기존 암호가 맞으면 회원 정보 수정
 			int cnt = service.modifyMemberInfo(member);
-
+			System.out.println(cnt);
 			if (cnt == 1) {
 				rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다.");
-				return "redirect:/member/info";
+				return "redirect:/member/modify";
 			} else {
 				rttr.addFlashAttribute("message", "회원 정보가 수정되지 않았습니다.");
 				return "redirect:/member/modify";
