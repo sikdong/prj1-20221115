@@ -34,6 +34,11 @@
 	DELETE FROM File
 	WHERE boardId = #{id} AND name = #{fileName}
 	</delete>
+	
+	<delete id="deleteLikeAll">
+	DELETE FROM BoardLike
+	WHERE boardId = #{id}
+	</delete>
 
 	<insert id="insertFile">
 	INSERT INTO File (boardId, name)

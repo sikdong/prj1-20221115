@@ -121,8 +121,8 @@ public class BoardController {
 	
 	@PostMapping("remove")
 	@PreAuthorize("@boardSecurity.checkWriter(authentication.name, #id)")
-	public String remove(Integer id, RedirectAttributes rttr, String boardId) {
-		int cnt = service.remove(id, boardId);
+	public String remove(Integer id, RedirectAttributes rttr) {
+		int cnt = service.remove(id);
 		if(cnt == 1) {
 			rttr.addFlashAttribute("message", "게시물이 삭제되었습니다");
 		} else {

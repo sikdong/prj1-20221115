@@ -34,7 +34,6 @@ public interface BoardMapper {
 	default BoardDto select(int id) {
 		return select(id, null);
 	}
-	default int deleteLike(String boardId) {
-		return deleteLike(boardId, null);
-	}
+
+	int deleteLikeAll(int id);
 }	

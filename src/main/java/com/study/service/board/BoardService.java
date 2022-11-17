@@ -151,10 +151,9 @@ public class BoardService {
 	}
 
 	@Transactional
-	public int remove(int id, String boardId) {
-		boardMapper.deleteLike(boardId);
+	public int remove(int id) {
 		BoardDto board = boardMapper.select(id);
-		
+		boardMapper.deleteLikeAll(id);
 		List<String> fileNames = board.getFileName();
 		
 		if(fileNames != null) {
