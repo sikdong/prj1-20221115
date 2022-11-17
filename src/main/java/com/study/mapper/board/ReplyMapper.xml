@@ -53,8 +53,8 @@
 	</select>
 
 	<insert id="insert">
-		INSERT INTO Reply(boardId, content) 
-		VALUES(#{boardId}, #{content})
+		INSERT INTO Reply(boardId, content, writer) 
+		VALUES(#{boardId}, #{content}, #{writer})
 	</insert>
 
 </mapper>

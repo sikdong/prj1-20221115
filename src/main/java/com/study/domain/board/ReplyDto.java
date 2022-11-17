@@ -11,6 +11,7 @@ import lombok.Data;
 
 @Data
 public class ReplyDto {
+	private String writer;
 	private int id;
 	private int boardId;
 	private String content;
