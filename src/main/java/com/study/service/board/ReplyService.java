@@ -19,9 +19,9 @@ public class ReplyService {
 		return mapper.insert(reply);
 	}
 
-	public List<ReplyDto> listReplyByBoardId(int boardId) {
+	public List<ReplyDto> listReplyByBoardId(int boardId, String username) {
 		// TODO Auto-generated method stub
-		return mapper.selectReplyByBoardId(boardId);
+		return mapper.selectReplyByBoardId(boardId, username);
 	}
 
 	public int removeById(int id) {

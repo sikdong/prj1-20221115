@@ -24,6 +24,7 @@
 		id,
 		boardId,
 		content,
+		writer,
 		inserted
 	FROM
 		Reply
@@ -43,6 +44,8 @@
 		id,
 		boardId,
 		content,
+		writer,
+		(writer = #{username}) editable,
 		inserted
 	FROM
 		Reply

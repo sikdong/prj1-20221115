@@ -9,6 +9,10 @@ import lombok.Data;
 
 @Data
 public class BoardDto {
+	private boolean liked;
+	private String memberId;
+	private String boardId;
+	private int countLike;
 	private int id;
 	private String title;
 	private String content;

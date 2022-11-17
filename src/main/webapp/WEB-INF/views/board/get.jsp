@@ -25,8 +25,8 @@
 	<c:url value="/board/modify" var="modifyLink">
 		<c:param name="id" value="${board.id }"></c:param>
 	</c:url>
-	
-	<h1>${board.id }번 게시물
+	<div class="d-flex">
+	<h1 class="me-auto">${board.id }번 게시물
 	<sec:authentication property="name" var="username"/>
 	<c:if test="${board.writer== username }">
 	<a class="btn btn-warning" href="${modifyLink }">
@@ -34,6 +34,26 @@
 	</a>
 	</c:if>
 	</h1>
+	<h1>
+		<button 
+		
+		<sec:authorize access="not isAuthenticated()" >
+			diasbled
+		</sec:authorize>
+		
+		 id="likeButton">
+			<c:if test="${board.liked }">
+				<i class="fa-solid fa-thumbs-up"></i>
+			</c:if>
+			<c:if test="${not board.liked }">
+				<i class="fa-regular fa-thumbs-up"></i>
+			</c:if>
+			
+			</button>
+			<span id="likeCount">${board.countLike }</span>
+		</h1>
+	</div>
+	
 	<div class="mb-3">
 		<label class="form-label"> 제목 </label> 
 		<input class="form-control" type="text" value="${board.title }" readonly>
@@ -205,6 +225,16 @@ function listReply() {
 			const modifyReplyButtonId = `modifyReplyButton\${item.id}`;
 			const removeReplyButtonId= `removeReplyButton\${item.id}`;
 			// console.log(item.id);
+			
+			const editButton = `
+			<div>
+				<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.id}" id="\${modifyReplyButtonId}">
+					<i class="fa-solid fa-pen"></i>
+				</button>
+				<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.id}" id="\${removeReplyButtonId}">
+					<i class="fa-solid fa-x"></i>
+				</button>
+			</div>`;
 			const replyDiv = 
 				`<div class="list-group-item d-flex">
 					<div class="me-auto">
@@ -216,18 +246,12 @@ function listReply() {
 							\${item.ago}
 						</small>
 				</div>
-				<div>
-				<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#modifyReplyFormModal" data-reply-id="\${item.id}" id="\${modifyReplyButtonId}">
-					<i class="fa-solid fa-pen"></i>
-				</button>
-				<button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#removeReplyConfirmModal" data-reply-id="\${item.id}" id="\${removeReplyButtonId}">
-					<i class="fa-solid fa-x"></i>
-				</button>
-				</div>
-				</div>`;
+					\${item.editable? editButton : ''}
+				</div>`
 				
 				replyListContainer.insertAdjacentHTML("beforeend", replyDiv);
 				// 수정 폼 모달에 댓글 내용 넣기
+				if(item.editable){
 				document.querySelector("#" + modifyReplyButtonId)
 					.addEventListener("click", function() {
 						document.querySelector("#modifyFormModalSubmitButton").setAttribute("data-reply-id", this.dataset.replyId);
@@ -244,6 +268,7 @@ function listReply() {
 					//dataset 다시 들어보기
 					
 				});
+			}	
 		}
 	});
 }
@@ -283,6 +308,28 @@ document.querySelector("#replySendButton1").addEventListener("click", function()
 		toast.show()
 	})
 	.then(() => listReply());
+});
+
+//좋아요 버튼 클릭시
+document.querySelector("#likeButton").addEventListener("click", function(){
+	const boardId = document.querySelector("#boardId").value;
+	
+	fetch(`\${ctx}/board/like`, {
+		method : "put",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify({boardId})
+	})
+	.then(res => res.json())
+	.then(data => {
+	if(data.current == 'liked'){
+		document.querySelector("#likeButton").innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`
+	} else {
+		document.querySelector("#likeButton").innerHTML = `<i class="fa-regular fa-thumbs-up"></i>`
+	}
+	document.querySelector("#likeCount").innerText = data.count;
+	});
 });
 
 </script>

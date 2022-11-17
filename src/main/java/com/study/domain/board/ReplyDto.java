@@ -17,6 +17,7 @@ public class ReplyDto {
 	private String content;
 	@JsonFormat(shape = Shape.STRING)
 	private LocalDateTime inserted; 
+	private boolean editable;
 	
 	public String getAgo() {
 		LocalDateTime now = LocalDateTime.now();
