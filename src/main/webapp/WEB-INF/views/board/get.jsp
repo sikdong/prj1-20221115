@@ -35,21 +35,21 @@
 	</c:if>
 	</h1>
 	<h1>
-		<button 
+		<span
 		
 		<sec:authorize access="not isAuthenticated()" >
-			diasbled
+			style="pointer-events: none;"
 		</sec:authorize>
 		
 		 id="likeButton">
-			<c:if test="${board.liked }">
+			<c:if test="${not board.liked }">
 				<i class="fa-solid fa-thumbs-up"></i>
 			</c:if>
-			<c:if test="${not board.liked }">
+			<c:if test="${board.liked }">
 				<i class="fa-regular fa-thumbs-up"></i>
 			</c:if>
 			
-			</button>
+			</span>
 			<span id="likeCount">${board.countLike }</span>
 		</h1>
 	</div>
@@ -174,6 +174,28 @@
 </body>
 <script>
 const ctx = "${pageContext.request.contextPath}";
+//좋아요 버튼 클릭시
+document.querySelector("#likeButton").addEventListener("click", function(){
+	const boardId = document.querySelector("#boardId").value;
+	
+	fetch(`\${ctx}/board/like`, {
+		method : "put",
+		headers : {
+			"Content-Type" : "application/json"
+		},
+		body : JSON.stringify({boardId})
+	})
+	.then(res => res.json())
+	.then(data => {
+	if(data.current == 'liked'){
+		document.querySelector("#likeButton").innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`
+	} else {
+		document.querySelector("#likeButton").innerHTML = `<i class="fa-regular fa-thumbs-up"></i>`
+	}
+	document.querySelector("#likeCount").innerText = data.count;
+	});
+});
+
 
 //댓글 crud 메시지 토스트
 const toast = new bootstrap.Toast(document.querySelector("#replyMessageToast"));
@@ -238,6 +260,10 @@ function listReply() {
 			const replyDiv = 
 				`<div class="list-group-item d-flex">
 					<div class="me-auto">
+						<h5>
+							<i class="fa-solid fa-user"></i>
+							\${item.writer}
+						</h5>
 						<div>
 							\${item.content}
 						</div>
@@ -284,53 +310,34 @@ function removeReply(replyId){
 			})
 	.then(() => listReply());
 }
-
-document.querySelector("#replySendButton1").addEventListener("click", function() {
-	const boardId = document.querySelector("#boardId").value;
-	const content = document.querySelector("#replyInput1").value;
-	
-	const data = {
-		boardId,
-		content
-	};
-	
-	fetch(`\${ctx}/reply/add`, {
-		method : "post",
-		headers : {
-			"Content-Type" : "application/json"
-		},
-		body : JSON.stringify(data)
-	})
-	.then(res => res.json())
-	.then(data => {
-		document.querySelector("#replyInput1").value=''
-		document.querySelector("#replyMessage1").innerText = data.message
-		toast.show()
-	})
-	.then(() => listReply());
-});
-
-//좋아요 버튼 클릭시
-document.querySelector("#likeButton").addEventListener("click", function(){
-	const boardId = document.querySelector("#boardId").value;
-	
-	fetch(`\${ctx}/board/like`, {
-		method : "put",
-		headers : {
-			"Content-Type" : "application/json"
-		},
-		body : JSON.stringify({boardId})
-	})
-	.then(res => res.json())
-	.then(data => {
-	if(data.current == 'liked'){
-		document.querySelector("#likeButton").innerHTML = `<i class="fa-solid fa-thumbs-up"></i>`
-	} else {
-		document.querySelector("#likeButton").innerHTML = `<i class="fa-regular fa-thumbs-up"></i>`
-	}
-	document.querySelector("#likeCount").innerText = data.count;
+const replySendButton = document.querySelector("#replySendButton1");
+if(replySendButton != null){	
+	document.querySelector("#replySendButton1").addEventListener("click", function() {
+		const boardId = document.querySelector("#boardId").value;
+		const content = document.querySelector("#replyInput1").value;
+		
+		const data = {
+			boardId,
+			content
+		};
+		
+		fetch(`\${ctx}/reply/add`, {
+			method : "post",
+			headers : {
+				"Content-Type" : "application/json"
+			},
+			body : JSON.stringify(data)
+		})
+		.then(res => res.json())
+		.then(data => {
+			document.querySelector("#replyInput1").value=''
+			document.querySelector("#replyMessage1").innerText = data.message
+			toast.show()
+		})
+		.then(() => listReply());
 	});
-});
+}
+
 
 </script>
 </html>

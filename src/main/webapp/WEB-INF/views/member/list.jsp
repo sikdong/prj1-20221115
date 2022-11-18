@@ -36,7 +36,7 @@
 					<tbody>
 						<c:forEach items="${memberList}" var="member">
 							<tr>
-							<c:url value="/member/modify" var="memberInfoLink">
+							<c:url value="/member/info" var="memberInfoLink">
 								<c:param name="id" value="${member.id }"></c:param>
 							</c:url>
 								<td>

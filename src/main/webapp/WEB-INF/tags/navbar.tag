@@ -26,21 +26,37 @@
 	<h1>로그인 안됨</h1>
 </sec:authorize> --%>
 <sec:authorize access="isAuthenticated()" var="loggedIn"/>
+<sec:authorize access="not isAuthenticated()" var="loggedOut"></sec:authorize>
+<sec:authorize access="hasAuthority('admin')" var="onlyAdmin"></sec:authorize>
 
 <c:url value="/member/signup" var="signupLink"></c:url>
 <c:url value="/member/list" var="memberListLink"></c:url>
 <c:url value="/member/login" var="loginLink"></c:url>
 <c:url value="/member/logout" var="logoutLink"></c:url>
 
+<sec:authentication property="name" var="username"/>
+<c:url value="/member/info" var="memberInfoLink">
+	<c:param name="id" value="${username }"></c:param>
+</c:url>
+<c:url value="/board/list" var="listLink"></c:url>
+
+<c:if test="${loggedIn }">
+<div>
+	<h5 class ="alert alert-light">${username } 님 반갑습니다</h5>
+</div>
+</c:if>
 <nav class="navbar navbar-expand-lg bg-light mb-3">
-  <div class="container-fluid">
+  <div class="container-md">
+  	 <a class="navbar-brand" href="${listLink }">
+    	<c:url value="/content/spring-loggo.svg" var="logoLink" />
+    	<img src="${logoLink }" alt="" style="height: 40px;">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-        <c:url value="/board/list" var="listLink"></c:url>
           <a class="nav-link ${active eq 'list'?'active':'' }" href="${listLink }">게시글 목록</a>
         </li>
         <c:if test="${loggedIn }">
@@ -49,7 +65,7 @@
           <a class="nav-link ${active eq 'register'?'active':'' }" href="${registerLink }">작성</a>
         </li>
         </c:if>
-        <c:if test="${loggedIn }">
+        <c:if test="${onlyAdmin }">
         <li class="nav-item">
           <a class="nav-link ${active eq 'memberList'?'active':'' }" href="${memberListLink }">회원목록</a>
         </li>
@@ -63,6 +79,9 @@
         </li>
         </c:if>
         <c:if test="${loggedIn }">
+         <li class="nav-item">
+        	<a href="${memberInfoLink }" class="nav-link">회원정보</a>
+        </li>
         <li class="nav-item">
         	<a href="${logoutLink }" class="nav-link">로그아웃</a>
         </li>

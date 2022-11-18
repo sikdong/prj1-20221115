@@ -56,7 +56,6 @@
 	<form action="${removeUrl }" method="post" id="deleteMemberInfoForm" >
 		<input type="hidden" name="id" value="${memberList.id }">
 	</form>
-		<input class="btn btn-danger" type="submit" value="탈퇴" data-bs-toggle="modal" data-bs-target="#deleteInfoConfirmModal">
 		</div>
 	</div>
 </div>	

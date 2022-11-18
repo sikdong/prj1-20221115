@@ -30,7 +30,6 @@
 					<thead>
 						<tr>
 							<th>#</th>
-							<th>LIKE</th>
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일시</th>
@@ -40,7 +39,6 @@
 						<c:forEach items="${boardList}" var="board">
 							<tr>
 								<td>${board.id }</td>
-								<td>${board.countLike }</td>
 								<td>
 									<c:url value="/board/get" var="getLink">
 										<c:param name="id" value="${board.id }"></c:param>
@@ -62,10 +60,17 @@
 											${board.countFile }
 										</span>
 									</c:if>
+									<c:if test="${board.countLike > 0 }">
+										<span class="badge rounded-pill text-bg-light">
+											<i class="fa-solid fa-heart"></i>
+											${board.countLike }
+										</span>
+									</c:if>
 									
 								</td>				
 								<td>${board.writer }</td>
-								<td>${board.ago }</td>
+								<td>${board.ago }
+								</td>
 							</tr>
 						</c:forEach> 
 					</tbody>
