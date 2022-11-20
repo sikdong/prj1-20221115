@@ -1,5 +1,7 @@
 package com.study.service.practice.member;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,11 @@ public class PracMemberService {
 	public int registerMember(MemberDto member) {
 		// TODO Auto-generated method stub
 		return mapper.insertMember(member);
+	}
+
+	public List<MemberDto> getMembers() {
+		// TODO Auto-generated method stub
+		return mapper.getMembers();
 	}
 
 }

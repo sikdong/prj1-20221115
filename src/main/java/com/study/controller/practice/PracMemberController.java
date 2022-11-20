@@ -1,11 +1,13 @@
 package com.study.controller.practice;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +41,12 @@ public class PracMemberController {
 		}
 		
 		return "redirect:/practice/list";
+	}
+	
+	@GetMapping("getMembers")
+	public void getMember(Model model){
+		List<MemberDto> members = service.getMembers();
+		model.addAttribute("Members", members);
 	}
 	
 	

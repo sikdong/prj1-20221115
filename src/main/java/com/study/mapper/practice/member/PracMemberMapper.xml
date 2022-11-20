@@ -10,4 +10,14 @@ INSERT INTO Member(id, password)
 VALUES(#{id}, #{password})
 </insert>
 
+<select id="getMembers">
+SELECT 
+	id,
+	password,
+	inserted
+FROM
+	Members
+
+</select>
+
 </mapper>
