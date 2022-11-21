@@ -23,7 +23,14 @@
 		<tbody>
 		 <c:forEach items="${members }" var="members">
 			<tr>
-				<td>${members.id }</td>
+				<td>
+					<c:url value="/practice/updateMembers" var="updateMemberLink">
+						<c:param name="id" value="${members.id }"></c:param>
+					</c:url>
+					<a href="${updateMemberLink }">
+						${members.id }
+					</a>
+				</td>
 				<td>${members.password }</td>
 				<td>${members.inserted }</td>
 			</tr>

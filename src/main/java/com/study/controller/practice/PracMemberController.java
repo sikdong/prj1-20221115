@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -43,11 +44,27 @@ public class PracMemberController {
 		return "redirect:/practice/list";
 	}
 	
-	@GetMapping("getMembers")
+	@GetMapping({"getMembers", "updateMembers"})
 	public void getMember(Model model){
 		List<MemberDto> members = service.getMembers();
 		model.addAttribute("Members", members);
 	}
+	
+	@PutMapping("updateMembers")
+	public Map<String, Object> updateMembers(MemberDto member){
+		Map<String, Object> map = new HashMap<>();
+		int cnt = service.updateMembers(member);
+		
+		if(cnt == 1) {
+			map.put("message", member.getId()+"님의 회원 정보가 수정되었습니다");
+		}
+		return map;
+			
+	}
+	
+	
+	
+	
 	
 	
 }

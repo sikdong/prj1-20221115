@@ -16,8 +16,17 @@ SELECT
 	password,
 	inserted
 FROM
-	Members
+	Member
 
 </select>
+
+<update id="updateMembers">
+UPDATE 
+	Member
+SET
+	password = #{password}
+WHERE
+	id = #{id}
+</update>
 
 </mapper>

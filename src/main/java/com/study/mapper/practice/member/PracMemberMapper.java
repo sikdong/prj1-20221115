@@ -9,5 +9,7 @@ public interface PracMemberMapper {
 	int insertMember(MemberDto member);
 
 	List<MemberDto> getMembers();
+
+	int updateMembers(MemberDto member);
 	
 }
