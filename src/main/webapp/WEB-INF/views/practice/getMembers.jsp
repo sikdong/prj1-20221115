@@ -21,7 +21,7 @@
 			</tr>
 		</thead>
 		<tbody>
-		 <c:forEach items="${members }" var="members">
+		 <c:forEach items="${Members }" var="members">
 			<tr>
 				<td>
 					<c:url value="/practice/updateMembers" var="updateMemberLink">

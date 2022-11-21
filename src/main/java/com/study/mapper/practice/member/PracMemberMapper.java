@@ -11,5 +11,7 @@ public interface PracMemberMapper {
 	List<MemberDto> getMembers();
 
 	int updateMembers(MemberDto member);
+
+	MemberDto getMember(String id);
 	
 }

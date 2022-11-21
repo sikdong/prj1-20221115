@@ -29,4 +29,9 @@ public class PracMemberService {
 		return mapper.updateMembers(member);
 	}
 
+	public MemberDto getMember(String id) {
+		// TODO Auto-generated method stub
+		return mapper.getMember(id);
+	}
+
 }

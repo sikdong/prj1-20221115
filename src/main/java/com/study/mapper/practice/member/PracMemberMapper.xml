@@ -10,7 +10,7 @@ INSERT INTO Member(id, password)
 VALUES(#{id}, #{password})
 </insert>
 
-<select id="getMembers">
+<select id="getMembers" resultType="com.study.domain.member.MemberDto">
 SELECT 
 	id,
 	password,
@@ -20,6 +20,17 @@ FROM
 
 </select>
 
+<select id="getMember" resultType="com.study.domain.member.MemberDto">
+SELECT 
+	id,
+	password,
+	inserted
+FROM
+	Member
+WHERE 
+	id = #{id}
+
+</select>
 <update id="updateMembers">
 UPDATE 
 	Member

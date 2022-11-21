@@ -10,7 +10,8 @@
 	<div class="container-md">
 		<div class="row">
 			<div class="col">
-				<h1>회원가입</h1>
+				<h1>회원 정보</h1>
+				<h4>${message }</h4>
 				
 				<form action="" method="post">
 					<div class="mb-3">
@@ -19,7 +20,7 @@
 						</label>
 						
 						<div class="input-group">
-							<input id="userIdInput1" class="form-control" type="text" name="id" value="${Members.id }">
+							<input readonly id="userIdInput1" class="form-control" type="text" value="${member.id }">
 							<button id="userIdExistButton1" class="btn btn-outline-secondary" type="button">중복확인</button>
 						</div>
 						
@@ -31,7 +32,7 @@
 						<label for="" class="form-label">
 							암호
 						</label>
-						<input id="passwordInput1" class="form-control" type="text" name="password" value="${Members.password }">
+						<input id="passwordInput1" class="form-control" type="text" name="password" value="${member.password }">
 						<div id="passwordText1" class="form-text"></div>
 					</div>
 					

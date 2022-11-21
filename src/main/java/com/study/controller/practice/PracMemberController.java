@@ -44,13 +44,19 @@ public class PracMemberController {
 		return "redirect:/practice/list";
 	}
 	
-	@GetMapping({"getMembers", "updateMembers"})
+	@GetMapping("getMembers")
 	public void getMember(Model model){
 		List<MemberDto> members = service.getMembers();
 		model.addAttribute("Members", members);
 	}
 	
-	@PutMapping("updateMembers")
+	@GetMapping("updateMembers")
+	public void updateMembers(Model model, String id) {
+		MemberDto member = service.getMember(id);
+		model.addAttribute("member" , member);
+	}
+	
+	@PostMapping("updateMembers")
 	public Map<String, Object> updateMembers(MemberDto member){
 		Map<String, Object> map = new HashMap<>();
 		int cnt = service.updateMembers(member);
