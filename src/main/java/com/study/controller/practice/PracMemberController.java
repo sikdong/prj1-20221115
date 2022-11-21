@@ -68,6 +68,15 @@ public class PracMemberController {
 			
 	}
 	
+	@PostMapping("deleteMembers")
+	public String deleteMembers(String id, RedirectAttributes rttr) {
+		int cnt = service.deleteMembers(id);
+		if(cnt == 1) {
+			rttr.addFlashAttribute("message", id+"님이 탈퇴하셨습니다");
+		}
+		return"redirect:/practice/getMembers";
+	}
+	
 	
 	
 	

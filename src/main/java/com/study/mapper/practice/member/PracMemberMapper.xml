@@ -40,4 +40,9 @@ WHERE
 	id = #{id}
 </update>
 
+<delete id="deleteMembers">
+DELETE FROM Member
+WHERE id=#{id}
+</delete>
+
 </mapper>

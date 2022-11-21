@@ -34,4 +34,9 @@ public class PracMemberService {
 		return mapper.getMember(id);
 	}
 
+	public int deleteMembers(String id) {
+		// TODO Auto-generated method stub
+		return mapper.deleteMembers(id);
+	}
+
 }

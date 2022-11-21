@@ -73,6 +73,8 @@ public class CustomerController {
 		int cnt = service.updateCustomer(customer);
 		if(cnt == 1) {
 			rttr.addFlashAttribute("message", customer.getId()+"번 고객 정보가 수정되었습니다");
+		} else {
+			rttr.addFlashAttribute("message", "실패");
 		}
 		return "redirect:/practice/list";
 	}

@@ -13,5 +13,7 @@ public interface PracMemberMapper {
 	int updateMembers(MemberDto member);
 
 	MemberDto getMember(String id);
+
+	int deleteMembers(String id);
 	
 }
