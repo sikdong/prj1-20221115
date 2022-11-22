@@ -74,6 +74,16 @@ ${message }
   </div>
 </div>
 
+<div id="replyMessageToast" class="toast align-items-center top-0 start-50 translate-middle-x position-fixed" role="alert" aria-live="assertive" aria-atomic="true">
+  <div class="d-flex">
+    <div id="replyMessage1" class="toast-body">
+      Hello, world! This is a toast message.
+    </div>
+    <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+</div>
+	
+
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
@@ -88,6 +98,8 @@ document.querySelector("#deleteConfirmButton").addEventListener("click", functio
 
 showComment();
 
+const toast = new bootstrap.Toast(document.querySelector("#replyMessageToast"));
+
 document.querySelector("#commentEnroll").addEventListener("click", function() {
 	const customerInfoId = document.querySelector("#customerId").value;
 	const content = document.querySelector("#comment").value;
@@ -101,8 +113,9 @@ document.querySelector("#commentEnroll").addEventListener("click", function() {
 	})
  	.then(res=>res.json())
 	.then(data => {
-		document.querySelector("#message").innerText = data.message
+		document.querySelector("#replyMessage1").innerText = data.message
 		document.querySelector("#comment").value=''
+		toast.show()
 	})
 	.then(() =>showComment());
 });
@@ -143,6 +156,7 @@ function deleteComment(commentId){
 		.then(res => res.json())
 		.then(data => {
 			document.querySelector("#message").innerText = data.message;
+			toast.show()
 		})
 		.then(() =>showComment());
 	};	
